@@ -10,6 +10,10 @@ const openai = new OpenAI({
 
 router.post('/chat', async (req, res) => {
     const { prompt } = req.body;
+    if (!prompt) {
+      console.error('Erro: O campo "prompt" está vazio ou indefinido.');
+      return res.status(400).json({ error: 'O campo "prompt" é obrigatório.' });
+    }
   
     try {
       const completion = await openai.chat.completions.create({
@@ -17,7 +21,6 @@ router.post('/chat', async (req, res) => {
         messages: [{ role: 'user', content: prompt }],
         max_tokens: 1000
       });
-      
       const answerChat = completion.choices[0].message.content;
       const newConversation = new Conversation({
         question: prompt,
