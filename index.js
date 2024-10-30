@@ -2,7 +2,7 @@ const cors = require('cors')
 require('dotenv').config()
 const express = require('express')
 const DB = require('./db')
-const crudRoutes = require('./crudRoutes')
+const router = require('./src/routes')
 
 const app = express()
 const port = 3001
@@ -16,7 +16,7 @@ DB()
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
-app.use('/', crudRoutes)
+app.use('/', router)
 
 app.listen(port, (erro) =>{
   if(erro) {
