@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+const Mongoose = require('mongoose');
 
 const DB = async () => {
   try {
-    await mongoose.connect('mongodb://mongodb:27017/chatgpt', {
+    await Mongoose.connect('mongodb://mongodb:27017/chatgpt', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })

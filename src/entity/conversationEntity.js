@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const { Schema } = mongoose
+const Mongoose = require('mongoose')
+const { Schema } = Mongoose
 
 const conversationSchema = new Schema({
     question: {
@@ -16,6 +16,6 @@ const conversationSchema = new Schema({
     }
 })
 
-const ConversationEntity = mongoose.model('Conversation', conversationSchema)
+const ConversationEntity = Mongoose.model('Conversation', conversationSchema)
 
 module.exports = ConversationEntity

@@ -1,6 +1,6 @@
 const express = require('express')
 const conversationEntity = require('./entity/conversationEntity')
-const router = express.Router()
+const Router = express.Router()
 const OpenAI = require('openai')
 
 const openai = new OpenAI({
@@ -8,7 +8,7 @@ const openai = new OpenAI({
 })
 
 
-router.post('/talktochat', async (req, res) => {
+Router.post('/talktochat', async (req, res) => {
     const { prompt } = req.body;
     if (!prompt) {
       console.error('Erro: O campo "prompt" está vazio ou indefinido.');
@@ -38,7 +38,7 @@ router.post('/talktochat', async (req, res) => {
     }
   });
 
-router.get('/fullconversation', async (req, res) => {
+Router.get('/fullconversation', async (req, res) => {
   try {
     const conversations = await conversationEntity.find()
     return res.json(conversations)
@@ -48,4 +48,4 @@ router.get('/fullconversation', async (req, res) => {
   }
 })
 
-module.exports = router
+module.exports = Router

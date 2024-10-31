@@ -1,5 +1,5 @@
-const mongosse = require('mongoose')
-const { Schema } = mongoose
+const Mongosse = require('mongoose')
+const { Schema } = Mongosse
 
 const inferenceSchema = new Schema({
     inference: {
@@ -12,6 +12,6 @@ const inferenceSchema = new Schema({
     }
 })
 
-const inferenceEntity = mongosse.model('Inference', inferenceSchema)
+const inferenceEntity = Mongosse.model('Inference', inferenceSchema)
 
 module.exports = inferenceEntity
