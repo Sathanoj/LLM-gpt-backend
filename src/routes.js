@@ -1,14 +1,15 @@
 const express = require('express')
-const conversationEntity = require('./entity/conversationEntity')
 const Router = express.Router()
 const OpenAI = require('openai')
+const conversationEntity = require('./entity/conversationEntity')
+const inferenceEntity = require('./entity/inferenceEntity')
 
 const openai = new OpenAI({
     apikey: process.env.OpenAI_API_KEY
 })
 
 
-Router.post('/talktochat', async (req, res) => {
+Router.post('/talktochat', async(req, res) => {
     const { prompt } = req.body;
     if (!prompt) {
       console.error('Erro: O campo "prompt" está vazio ou indefinido.');
@@ -20,13 +21,13 @@ Router.post('/talktochat', async (req, res) => {
         model: 'gpt-4o-mini',
         messages: [{ role: 'user', content: prompt }],
         max_tokens: 1000
-      });
+      })
       const answerChat = completion.choices[0].message.content;
       const newConversation = new conversationEntity({
         question: prompt,
         answer: answerChat,
         date: new Date()
-      });
+      })
       await newConversation.save();
       // return newConversation
       if(res.status(200)) {
@@ -36,9 +37,9 @@ Router.post('/talktochat', async (req, res) => {
       console.error(error);
       res.status(500).json({ error: 'Erro ao processar a requisição' });
     }
-  });
+  })
 
-Router.get('/fullconversation', async (req, res) => {
+Router.get('/fullconversation', async(req, res) => {
   try {
     const conversations = await conversationEntity.find()
     return res.json(conversations)
@@ -46,6 +47,11 @@ Router.get('/fullconversation', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: 'Erro ao processar a requisição' });
   }
+})
+
+Router.get('/inference', async(req, res) => {
+  const inferenceData = await inferenceEntity.find()
+  return res.json(inferenceData)
 })
 
 module.exports = Router
